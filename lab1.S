@@ -1,24 +1,24 @@
-.global lab1
-.syntax unified
-.cpu cortex-m4
-.thumb
+.global lab1        @ Робимо мітку lab1 доступною глобально, щоб її можна було викликати з start.S
+.syntax unified     @ Використовуємо unified синтаксис ARM/Thumb для зручності
+.cpu cortex-m4      @ Вказуємо процесор Cortex-M4
+.thumb              @ Використовуємо Thumb режим інструкцій (16/32 біти)
 
-.section .text
+.section .text     @ Розділ коду (тут буде машинний код)
 
-lab1:
-    push {lr}
+lab1:               @ Початок процедури lab1
+    push {lr}       @ Зберігаємо регістр lr (адресу повернення) на стек
 
-    mov r0, #10
-    mov r1, #4
-    mov r2, #3
+    mov r0, #10     @ r0 = a = 10
+    mov r1, #4      @ r1 = b = 4
+    mov r2, #3      @ r2 = c = 3
 
-    sub r3, r0, r1
-    mov r4, #3
-    mul r3, r3, r4
+    sub r3, r0, r1  @ r3 = a - b = 10 - 4 = 6
+    mov r4, #3      @ r4 = 3, множник для наступної операції
+    mul r3, r3, r4  @ r3 = (a - b) * 3 = 6 * 3 = 18
 
-    mov r4, #1
-    lsl r4, r4, r2
+    mov r4, #1      @ r4 = 1, початкове значення для степеня
+    lsl r4, r4, r2  @ r4 = r4 << r2 = 1 << 3 = 8 (2^c)
 
-    add r0, r3, r4
+    add r0, r3, r4  @ r0 = (a - b)*3 + 2^c = 18 + 8 = 26
 
-    pop {pc}
+    pop {pc}        @ Повернення до адреси збереженої в lr (завершення функції)
